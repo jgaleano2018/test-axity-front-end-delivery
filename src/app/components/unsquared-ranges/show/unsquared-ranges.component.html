@@ -1,0 +1,145 @@
+<div class="container">
+    <h2 class="text-center mt-5 mb-3">Countries Manager</h2>
+    <div class="card">
+        <div class="card-header">
+            <a routerLink="/listCountries/create"
+                class="btn btn-outline-primary float-right"
+                >Create New Log Countries
+            </a>
+        </div>
+        <div class="card-body">
+      
+            <form [formGroup]="unsquaredRangesForm" (ngSubmit)="onSubmit()">
+  
+                <h3 style="text-align:center">
+                    Rangos Descuadrados
+                </h3>
+        
+                <div class="form-group">
+                    <!-- Conciliation Date -->
+                    <label for="dfearax">Fecha de Conciliación: <span class="lblError">*</span></label>
+                    <div class="controls">
+                      <input type="date" id="dfearax" placeholder="Conciliation Date" class="form-control" formControlName="dfearax" class="form-control"/>
+        
+                      @if(unsquaredRangesForm.get('dfearax')!.hasError('required')){
+                        <small>Conciliation Dayte is mandatory ..</small>
+                      }
+        
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Branch -->
+                    <label for="sucax">Sucursal: <span class="lblError">*</span></label>
+                    <div class="controls">
+                        <select id="sucax" formControlName="sucax" class="form-control">
+                            @for (item of sucaxList; track item.sidsucax) {
+                                <option [ngValue]="item">
+                                {{ item.scodsucax + "-" + item.snomsucax }}
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <!-- Product -->
+                    <label for="prax">Producto: <span class="lblError">*</span></label>
+                    <div class="controls">
+                        <select id="prax" formControlName="prax" class="form-control">
+                            @for (item of praxList; track item.pidprax) {
+                                <option [ngValue]="item">
+                                {{ item.pcodprax + "-" + item.pnomprax }}
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" [disabled]="unsquaredRangesForm.invalid" style="width: 15%">
+                        Sign Up
+                    </button>
+                </div>
+              
+            </form>
+
+            <br>
+
+            <div class="table-responsive">
+
+                <mat-table class="unsquaredRanges-table mat-elevation-z8" [dataSource]="dataSource"
+                matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+                        <mat-cell *matCellDef="let unquaredRanges">{{unquaredRanges.id}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="danoax">
+                        <mat-header-cell *matHeaderCellDef>Conciliation Date</mat-header-cell>
+                        <mat-cell class="danoax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.danoax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dcodsucax">
+                        <mat-header-cell *matHeaderCellDef>Branch Code</mat-header-cell>
+                        <mat-cell class="dcodsucax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dcodsucax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dnomsucax">
+                        <mat-header-cell *matHeaderCellDef>Branch Name</mat-header-cell>
+                        <mat-cell class="dnomsucax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dnomsucax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dcoprax">
+                        <mat-header-cell *matHeaderCellDef>Product</mat-header-cell>
+                        <mat-cell class="dcoprax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dcoprax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dcodoax">
+                        <mat-header-cell *matHeaderCellDef>Document</mat-header-cell>
+                        <mat-cell class="dcodoax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dcodoax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dfearax">
+                        <mat-header-cell *matHeaderCellDef>Unsquared Ranges</mat-header-cell>
+                        <mat-cell class="dfearax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dfearax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ddifax">
+                        <mat-header-cell *matHeaderCellDef>Increment Percentage</mat-header-cell>
+                        <mat-cell class="ddifax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.ddifax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dsfarax">
+                        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                        <mat-cell class="dsfarax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dsfarax}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dresax">
+                        <mat-header-cell *matHeaderCellDef>Conciliation Type</mat-header-cell>
+                        <mat-cell class="dresax-cell"
+                                *matCellDef="let unquaredRanges">{{unquaredRanges.dresax}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    
+                </mat-table>
+
+            </div>
+
+            <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 30, 40, 50]"></mat-paginator>
+
+        </div>
+    </div>
+</div>
+

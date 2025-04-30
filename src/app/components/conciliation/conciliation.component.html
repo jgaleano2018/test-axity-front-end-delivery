@@ -1,0 +1,108 @@
+<div class="container">
+    <form [formGroup]="conciliationForm" (ngSubmit)="onSubmit()">
+  
+          <h3 style="text-align:center">
+              Conciliaciones
+          </h3>
+  
+  
+          <div class="form-group">
+                <!-- Username -->
+                <label for="afearax">Fecha de Conciliación: <span class="lblError">*</span></label>
+                <div class="controls">
+                  <input type="date" id="afearax" placeholder="Conciliation Date" class="form-control" formControlName="afearax" class="form-control"/>
+
+                  @if(conciliationForm.get('afearax')!.hasError('required')){
+                    <small>Conciliation Dayte is mandatory ..</small>
+                  }
+
+                </div>
+          </div>
+  
+          <div class="form-group">
+            <!-- Branch -->
+            <label for="sucax">Sucursal: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="sucax" formControlName="sucax" class="form-control">
+                    @for (item of sucaxList; track item.sidsucax) {
+                        <option [ngValue]="item">
+                        {{ item.scodsucax + "-" + item.snomsucax }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Product -->
+            <label for="prax">Producto: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="prax" formControlName="prax" class="form-control">
+                    @for (item of praxList; track item.pidprax) {
+                        <option [ngValue]="item">
+                        {{ item.pcodprax + "-" + item.pnomprax }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <!-- Document -->
+            <label for="doax">Documento: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="doax" formControlName="doax" class="form-control">
+                    @for (item of doaxList; track item.diddoax) {
+                        <option [ngValue]="item">
+                        {{ item.dcoddoax + "-" + item.dnomdoax }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <!-- Increment Percentage -->            
+            <label for="adifax">% Incremento <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="number" id="adifax" placeholder="Increment Percentage" class="form-control" formControlName="adifax">
+             
+              @if(conciliationForm.get('adifax')!.hasError('required')){
+                <small>Increment Percentage is mandatory ..</small>
+              }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Total Conciliation -->            
+            <label for="asfarax">Total <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="number" id="asfarax" placeholder="Increment Percentage" class="form-control" formControlName="asfarax">
+             
+              @if(conciliationForm.get('asfarax')!.hasError('required')){
+                <small>Total Conciliation is mandatory ..</small>
+              }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Conciliation Type -->            
+            <label for="aresax">Tipo de Conciliación <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="number" id="aresax" placeholder="Conciliation Type" class="form-control" formControlName="aresax">
+             
+              @if(conciliationForm.get('aresax')!.hasError('required')){
+                <small>Conciliation Type is mandatory ..</small>
+              }
+            </div>
+        </div>
+  
+         
+        <!--<div class="form-group">
+        <button class="btn btn-primary" type="submit" [disabled]="conciliationForm.invalid" style="width: 15%">
+            Sign Up
+        </button>
+        </div>-->
+  
+    </form>
+  </div>

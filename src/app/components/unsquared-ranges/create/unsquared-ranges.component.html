@@ -1,0 +1,156 @@
+<div class="container">
+    <form [formGroup]="unsquaredRangesForm" (ngSubmit)="onSubmit()">
+  
+          <h3 style="text-align:center">
+              Rangos Descuadrados
+          </h3>
+  
+          <div class="form-group">
+            <!-- Year Filter -->
+            <label for="danoax">Año: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="danoax" formControlName="danoax" class="form-control">
+                    @for (item of danoaxList; track item.id) {
+                        <option [ngValue]="item">
+                        {{ item.value }}
+                        </option>
+                    }
+                </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <!-- Month filter -->
+            <label for="dmesax">Mes: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="dmesax" formControlName="Year Unsquared Ranges" class="form-control">
+                    <option value="01">January</option>
+                    <option value="02">Febrary</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">Agoust</option>
+                    <option value="09">September</option>
+                    <option value="10">Octuber</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <!-- Year Filter -->
+            <label for="dconax">Día: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="dconax" formControlName="dconax" class="form-control">
+                    @for (item of dconaxList; track item.id) {
+                        <option [ngValue]="item">
+                        {{ item.value }}
+                        </option>
+                    }
+                </select>
+            </div>
+          </div>
+         
+          <div class="form-group">
+            <!-- Branch -->
+            <label for="sucax">Sucursal: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="sucax" formControlName="sucax" class="form-control">
+                    @for (item of sucaxList; track item.sidsucax) {
+                        <option [ngValue]="item">
+                        {{ item.scodsucax + "-" + item.snomsucax }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Product -->
+            <label for="prax">Producto: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="prax" formControlName="prax" class="form-control">
+                    @for (item of praxList; track item.pidprax) {
+                        <option [ngValue]="item">
+                        {{ item.pcodprax + "-" + item.pnomprax }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <!-- Document -->
+            <label for="doax">Documento: <span class="lblError">*</span></label>
+            <div class="controls">
+                <select id="doax" formControlName="doax" class="form-control">
+                    @for (item of doaxList; track item.diddoax) {
+                        <option [ngValue]="item">
+                        {{ item.dcoddoax + "-" + item.dnomdoax }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Username -->
+            <label for="dfearax">Fecha de Conciliación: <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="date" id="dfearax" placeholder="Conciliation Date" class="form-control" formControlName="dfearax" class="form-control"/>
+
+              @if(unsquaredRangesForm.get('dfearax')!.hasError('required')){
+                <small>Conciliation Dayte is mandatory ..</small>
+              }
+
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <!-- Increment Percentage -->            
+            <label for="ddifax">% Incremento <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="number" id="ddifax" placeholder="Increment Percentage" class="form-control" formControlName="ddifax">
+             
+              @if(unsquaredRangesForm.get('ddifax')!.hasError('required')){
+                <small>Increment Percentage is mandatory ..</small>
+              }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Total Conciliation -->            
+            <label for="dsfarax">Total <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="number" id="dsfarax" placeholder="Increment Percentage" class="form-control" formControlName="dsfarax">
+             
+              @if(unsquaredRangesForm.get('dsfarax')!.hasError('required')){
+                <small>Total Conciliation is mandatory ..</small>
+              }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- Conciliation Type -->            
+            <label for="dresax">Tipo de Conciliación <span class="lblError">*</span></label>
+            <div class="controls">
+              <input type="number" id="dresax" placeholder="Conciliation Type" class="form-control" formControlName="dresax">
+             
+              @if(unsquaredRangesForm.get('dresax')!.hasError('required')){
+                <small>Conciliation Type is mandatory ..</small>
+              }
+            </div>
+        </div>
+  
+         
+        <!--<div class="form-group">
+        <button class="btn btn-primary" type="submit" [disabled]="unsquaredRangesForm.invalid" style="width: 15%">
+            Sign Up
+        </button>
+        </div>-->
+  
+    </form>
+  </div>
