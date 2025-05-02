@@ -6,18 +6,6 @@ import axios from 'axios';
 })
  
 export class ConciliationService {
- 
-  getAllBranch (): Promise<any>{
-    return axios.get('/conciliation/branch');
-  }
-
-  getAllProduct (): Promise<any>{
-    return axios.get('/conciliation/product');
-  }
-
-  getAllDocument (): Promise<any>{
-    return axios.get('/conciliation/document');
-  }
 
   create(conciliationList: any, unsquaredRangesObject: any, monthConciliationRequest: string, yearConciliationRequest: string): Promise<any>{
     const bodyRequest = {
@@ -27,7 +15,7 @@ export class ConciliationService {
       "yearConciliationRequest": yearConciliationRequest
     }
 
-    return axios.post('/conciliation', bodyRequest);
+    return axios.post('/Conciliation/createConciliation', bodyRequest);
   }
 
   

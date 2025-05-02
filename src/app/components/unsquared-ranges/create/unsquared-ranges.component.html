@@ -23,7 +23,7 @@
             <!-- Month filter -->
             <label for="dmesax">Mes: <span class="lblError">*</span></label>
             <div class="controls">
-                <select id="dmesax" formControlName="Year Unsquared Ranges" class="form-control">
+                <select id="dmesax" formControlName="dmesax" class="form-control">
                     <option value="01">January</option>
                     <option value="02">Febrary</option>
                     <option value="03">March</option>
@@ -46,7 +46,7 @@
             <div class="controls">
                 <select id="dconax" formControlName="dconax" class="form-control">
                     @for (item of dconaxList; track item.id) {
-                        <option [ngValue]="item">
+                        <option [ngValue]="item.id">
                         {{ item.value }}
                         </option>
                     }
@@ -60,7 +60,7 @@
             <div class="controls">
                 <select id="sucax" formControlName="sucax" class="form-control">
                     @for (item of sucaxList; track item.sidsucax) {
-                        <option [ngValue]="item">
+                        <option [ngValue]="item.sidsucax">
                         {{ item.scodsucax + "-" + item.snomsucax }}
                         </option>
                     }
@@ -74,7 +74,7 @@
             <div class="controls">
                 <select id="prax" formControlName="prax" class="form-control">
                     @for (item of praxList; track item.pidprax) {
-                        <option [ngValue]="item">
+                        <option [ngValue]="item.pidprax">
                         {{ item.pcodprax + "-" + item.pnomprax }}
                         </option>
                     }
@@ -88,7 +88,7 @@
             <div class="controls">
                 <select id="doax" formControlName="doax" class="form-control">
                     @for (item of doaxList; track item.diddoax) {
-                        <option [ngValue]="item">
+                        <option [ngValue]="item.diddoax">
                         {{ item.dcoddoax + "-" + item.dnomdoax }}
                         </option>
                     }
@@ -137,7 +137,7 @@
             <!-- Conciliation Type -->            
             <label for="dresax">Tipo de Conciliación <span class="lblError">*</span></label>
             <div class="controls">
-              <input type="number" id="dresax" placeholder="Conciliation Type" class="form-control" formControlName="dresax">
+              <input type="text" id="dresax" placeholder="Conciliation Type" class="form-control" formControlName="dresax">
              
               @if(unsquaredRangesForm.get('dresax')!.hasError('required')){
                 <small>Conciliation Type is mandatory ..</small>
@@ -146,11 +146,11 @@
         </div>
   
          
-        <!--<div class="form-group">
+        <div class="form-group">
         <button class="btn btn-primary" type="submit" [disabled]="unsquaredRangesForm.invalid" style="width: 15%">
-            Sign Up
+            Submit
         </button>
-        </div>-->
+        </div>
   
     </form>
   </div>

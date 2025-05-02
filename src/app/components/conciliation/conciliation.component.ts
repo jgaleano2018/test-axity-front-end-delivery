@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, inject } from "@angular/core";
 import { FormGroup, FormGroupDirective, ReactiveFormsModule } from "@angular/forms";
 import Swal from 'sweetalert2'
 import {
@@ -8,6 +8,9 @@ import {
 
 import { ConciliationModel } from "./conciliation";
 import { ConciliationService } from "./conciliation.service";
+import { BranchService } from '../../services/branch.service';
+import { ProductService } from '../../services/product.service';
+import { DocumentService } from '../../services/document.service';
 import { BranchModel } from "./branch";
 import { ProductModel } from "./product";
 import { DocumentModel } from "./document";
@@ -21,19 +24,50 @@ import { DocumentModel } from "./document";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConciliationComponent implements OnInit {
-  formGroupDir = inject(FormGroupDirective);
+  //formGroupDir = inject(FormGroupDirective);
   conciliationForm!: FormGroup<any>;
   sucaxList: BranchModel[] = [];
   praxList: ProductModel[] = [];
   doaxList: DocumentModel[] = [];
 
-  invalidNamesArr: string[] = ["Hello", "Angular"];
+  conciliationArray: ConciliationModel[] = [];
 
-  constructor(private _conciliationServiceObj: ConciliationService) {
-    this._conciliationServiceObj.getAllBranch()
+  @Output() conciliationEvent = new EventEmitter<ConciliationModel[]>();
+
+  constructor(private _conciliationServiceObj: ConciliationService,
+              private _branchServiceObj: BranchService,
+              private _productServiceObj: ProductService,
+              private _documentServiceObj: DocumentService
+  ) {
+
+    console.log("Testing today in may111111111..........");
+    this.conciliationForm = new FormGroup({
+      afearax: new FormControl(new Date(), [Validators.required]),
+      sucax: new FormControl(null, [Validators.required]),
+      prax: new FormControl(null, [Validators.required]),
+      doax: new FormControl(null, [Validators.required]),
+      adifax: new FormControl(0.00, [Validators.required]),
+      asfarax: new FormControl(0.00, [Validators.required]),
+      aresax: new FormControl(null, [Validators.required])
+    });
+
+    this.conciliationArray = [];
+    
+  }
+
+  ngOnInit() {
+
+    //this.conciliationForm = this.formGroupDir.form.get('conciliation') as FormGroup;
+
+    console.log("Testing today in may..........");
+
+    this._branchServiceObj.getAllBranch()
     .then(({data}) => {
       
       this.sucaxList = data;
+
+      console.log("Testing today in may..........");
+      console.log(this.sucaxList);
       
     }).catch(error => {
       Swal.fire({
@@ -45,7 +79,7 @@ export class ConciliationComponent implements OnInit {
       return error
     });
 
-    this._conciliationServiceObj.getAllProduct()
+    this._productServiceObj.getAllProduct()
     .then(({data}) => {
       
       this.praxList = data;
@@ -60,7 +94,7 @@ export class ConciliationComponent implements OnInit {
       return error
     });
 
-    this._conciliationServiceObj.getAllDocument()
+    this._documentServiceObj.getAllDocument()
     .then(({data}) => {
       
       this.doaxList = data;
@@ -76,24 +110,16 @@ export class ConciliationComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    /*this.conciliationForm = new FormGroup({
-      afearax: new FormControl(new Date(), [Validators.required]),
-      sucax: new FormControl(this.sucaxList, [Validators.required]),
-      prax: new FormControl(this.praxList, [Validators.required]),
-      doax: new FormControl(this.doaxList, [Validators.required]),
-      adifax: new FormControl(0.00, [Validators.required]),
-      asfarax: new FormControl(0.00, [Validators.required]),
-      aresax: new FormControl(null, [Validators.required])
-    });*/
-
-    this.conciliationForm = this.formGroupDir.form.get('conciliation') as FormGroup;
-
-  }
-
   onSubmit() {
     console.log(this.conciliationForm);
     
+    this.conciliationEvent.emit(this.conciliationArray);
+
+  }
+
+
+  addConciliation() {
+
     const conciliationItem: ConciliationModel = new ConciliationModel(
       1,
       this.conciliationForm.get('afearax')!.value,
@@ -104,6 +130,11 @@ export class ConciliationComponent implements OnInit {
       this.conciliationForm.get("asfarax")!.value,
       this.conciliationForm.get("aresax")!.value
     );
+
+    this.conciliationArray.push(conciliationItem);
+
+    console.log("Adding conciliation....");
+    console.log(this.conciliationArray);
 
   }
 

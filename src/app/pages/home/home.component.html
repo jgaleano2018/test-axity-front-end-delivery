@@ -1,15 +1,12 @@
 <div class="container">
-    <h1>Angular Version: {{ version }}!</h1>
-    <h3>Form Unified Control State Change Events</h3>
-    <h4>Type Pikachu in the name field to trigger valueChanges</h4>
-
+    
     <form [formGroup]="formGroup" (reset)="resetMyForm($event)" (submit)="formSubmit.next()">
       
         <div class="form-group">
             <!-- Year Filter -->
             <label for="yearConciliation">Año: <span class="lblError">*</span></label>
             <div class="controls">
-                <select id="yearConciliation" formControlName="danoax" class="form-control">
+                <select id="yearConciliation" formControlName="yearConciliation" class="form-control">
                     @for (item of yearList; track item.id) {
                         <option [ngValue]="item">
                         {{ item.value }}
@@ -23,7 +20,7 @@
             <!-- Month filter -->
             <label for="monthConciliation">Mes: <span class="lblError">*</span></label>
             <div class="controls">
-                <select id="monthConciliation" formControlName="Month Unsquared Ranges" class="form-control">
+                <select id="monthConciliation" formControlName="monthConciliation" class="form-control">
                     <option value="01">January</option>
                     <option value="02">Febrary</option>
                     <option value="03">March</option>
@@ -39,22 +36,18 @@
                 </select>
             </div>
         </div>
-      <app-conciliation />
-      <app-unsquared-ranges />
-      <app-unsquared-ranges-view />
-      <div>
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit" type="submit" [disabled]="formGroup.invalid" style="width: 15%">
+            Save Conciliation
+        </button>
+        <button class="btn btn-primary" type="reset" [disabled]="formGroup.invalid" style="width: 15%">
+            Reset
+        </button>
       </div>
     </form>
 
-    <div>
-      @if(formReset$ | async; as formReset) {
-        <p>Form reset occurred at {{ formReset.timestamp }}. Form reset occurred {{ formReset.count }} times.</p>
-      }
-      @if(formSubmit$ | async; as formSubmit) {
-        <p>Form submit occurred at {{ formSubmit.timestamp }}.</p>
-        <pre>Form Values: {{ formSubmit.values | json }}</pre>
-      }
-    <div>
+    <app-conciliation (conciliationEvent)="receiveConciliation($event)" />
+    <app-unsquared-ranges (unsquaredRangesEvent)="receiveUnsquaredRanges($event)" />
+    <app-unsquared-ranges-view />
+
   <div>

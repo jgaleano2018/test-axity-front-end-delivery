@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, inject } from "@angular/core";
 import { FormGroup, FormGroupDirective, ReactiveFormsModule } from "@angular/forms";
 import Swal from 'sweetalert2'
 import {
@@ -9,8 +9,12 @@ import { BranchModel } from "../branch";
 import { ProductModel } from "../product";
 import { DocumentModel } from "../document";
 import { UnsquaredRangesService } from "../unsquared-ranges.service";
+import { BranchService } from '../../../services/branch.service';
+import { ProductService } from '../../../services/product.service';
+import { DocumentService } from '../../../services/document.service';
 import { ConciliationService } from "../../conciliation/conciliation.service";
 import { YearUnsquaredRangesModel } from "../yearUnsquaredRanges";
+import { UnsquaredRangesModel } from "../unsquaredRanges";
 
 @Component({
   selector: 'app-unsquared-ranges',
@@ -21,21 +25,45 @@ import { YearUnsquaredRangesModel } from "../yearUnsquaredRanges";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnsquaredRangesComponent implements OnInit {
-  formGroupDir = inject(FormGroupDirective);
   unsquaredRangesForm!: FormGroup<any>;
   sucaxList: BranchModel[] = [];
   praxList: ProductModel[] = [];
   doaxList: DocumentModel[] = [];
   danoaxList: YearUnsquaredRangesModel[] = [];
   dconaxList: YearUnsquaredRangesModel[] = [];
+  conciliationArray: UnsquaredRangesModel[] = [];
 
-  invalidNamesArr: string[] = ["Hello", "Angular"];
+  @Output() unsquaredRangesEvent = new EventEmitter<UnsquaredRangesModel>();
 
-  constructor(private _conciliationServiceObj: ConciliationService, private _unsquaredRangesServiceObj: UnsquaredRangesService) {
+  constructor(private _conciliationServiceObj: ConciliationService, 
+              private _unsquaredRangesServiceObj: UnsquaredRangesService,
+              private _branchServiceObj: BranchService,
+              private _productServiceObj: ProductService,
+              private _documentServiceObj: DocumentService) {
     this.danoaxList = [];
     this.dconaxList = [];
+    this.doaxList = [];
 
-    this._conciliationServiceObj.getAllBranch()
+    this.unsquaredRangesForm = new FormGroup({
+      danoax: new FormControl(null, [Validators.required]),
+      dmesax: new FormControl(null, [Validators.required]),
+      dconax: new FormControl(null, [Validators.required]),
+      sucax: new FormControl(null, [Validators.required]),
+      prax: new FormControl(null, [Validators.required]),
+      doax: new FormControl(null, [Validators.required]),
+      dfearax: new FormControl(new Date(), [Validators.required]),
+      ddifax: new FormControl(0.00, [Validators.required]),
+      dsfarax: new FormControl(0.00, [Validators.required]),
+      dresax: new FormControl(null, [Validators.required])
+    });
+
+  }
+
+  ngOnInit() {
+
+    //this.unsquaredRangesForm = this.formGroupDir.form.get('unsquaredRanges') as FormGroup;
+
+    this._branchServiceObj.getAllBranch()
     .then(({data}) => {
       
       this.sucaxList = data;
@@ -50,7 +78,7 @@ export class UnsquaredRangesComponent implements OnInit {
       return error
     });
 
-    this._conciliationServiceObj.getAllProduct()
+    this._productServiceObj.getAllProduct()
     .then(({data}) => {
       
       this.praxList = data;
@@ -65,7 +93,7 @@ export class UnsquaredRangesComponent implements OnInit {
       return error
     });
 
-    this._conciliationServiceObj.getAllDocument()
+    this._documentServiceObj.getAllDocument()
     .then(({data}) => {
       
       this.doaxList = data;
@@ -99,27 +127,24 @@ export class UnsquaredRangesComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-
-    /*this.unsquaredRangesForm = new FormGroup({
-      danoax: new FormControl(null, [Validators.required]),
-      dmesax: new FormControl(null, [Validators.required]),
-      dconax: new FormControl(null, [Validators.required]),
-      sucax: new FormControl(this.sucaxList, [Validators.required]),
-      prax: new FormControl(this.praxList, [Validators.required]),
-      doax: new FormControl(this.doaxList, [Validators.required]),
-      dfearax: new FormControl(new Date(), [Validators.required]),
-      ddifax: new FormControl(0.00, [Validators.required]),
-      dsfarax: new FormControl(0.00, [Validators.required]),
-      dresax: new FormControl(null, [Validators.required])
-    });*/
-
-    this.unsquaredRangesForm = this.formGroupDir.form.get('unsquaredRanges') as FormGroup;
-
-  }
-
   onSubmit() {
     console.log(this.unsquaredRangesForm);
+
+    const unsquaredRangesItem: UnsquaredRangesModel = new UnsquaredRangesModel(
+          1,
+          this.unsquaredRangesForm.get('danoax')!.value,
+          this.unsquaredRangesForm.get("dmesax")!.value,
+          this.unsquaredRangesForm.get("dconax")!.value,
+          this.unsquaredRangesForm.get("sucax")!.value,
+          this.unsquaredRangesForm.get("prax")!.value,
+          this.unsquaredRangesForm.get("doax")!.value,
+          this.unsquaredRangesForm.get("dfearax")!.value,
+          this.unsquaredRangesForm.get("ddifax")!.value,
+          this.unsquaredRangesForm.get("dsfarax")!.value,
+          this.unsquaredRangesForm.get("dresax")!.value,
+        );
+
+    this.unsquaredRangesEvent.emit(unsquaredRangesItem);
   }
 
 }

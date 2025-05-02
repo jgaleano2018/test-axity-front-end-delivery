@@ -9,19 +9,19 @@ import { BranchModel } from "../branch";
 import { ProductModel } from "../product";
 import { UnsquaredRangesService } from "../unsquared-ranges.service";
 import { ConciliationService } from "../../conciliation/conciliation.service";
-import { UnsquaredRangesViewModel } from "../unsquaredRangesVIew";
-
+import { BranchService } from '../../../services/branch.service';
+import { ProductService } from '../../../services/product.service';
+import { DocumentService } from '../../../services/document.service';
+import { UnsquaredRangesViewModel } from "../unsquaredRangesView";
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule} from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from "@angular/router";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-//import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-unsquared-ranges-view',
@@ -38,14 +38,28 @@ export class UnsquaredRangesComponentView {
   praxList: ProductModel[] = [];
 
   isFilter:boolean = false;
-  displayedColumns: string[] = ["actions", "id", "username", "request_timestamp", "num_countries_returned", "countries_details"];
+  displayedColumns: string[] = ["id", "danoax", "dcodsucax", "dnomsucax", "dcoprax", "dcodoax", "dfearax", "ddifax", "dsfarax", "dresax"];
   dataSource: UnsquaredRangesViewModel[] = [];  
   totalItems: number = 0;
   pageSize: number = 10;
 
-  constructor(private _conciliationServiceObj: ConciliationService, private _unsquaredRangesServiceObj: UnsquaredRangesService) {
+  constructor(private _conciliationServiceObj: ConciliationService, 
+              private _unsquaredRangesServiceObj: UnsquaredRangesService,
+              private _branchServiceObj: BranchService,
+              private _productServiceObj: ProductService,
+              private _documentServiceObj: DocumentService) {
       
-      this._conciliationServiceObj.getAllBranch()
+      this.unsquaredRangesForm = new FormGroup({
+        sucax: new FormControl(null, [Validators.required]),
+        prax: new FormControl(null, [Validators.required]),
+        dfearax: new FormControl(new Date(), [Validators.required])
+      });
+  
+    }
+  
+    ngOnInit() {
+  
+      this._branchServiceObj.getAllBranch()
       .then(({data}) => {
         
         this.sucaxList = data;
@@ -60,7 +74,7 @@ export class UnsquaredRangesComponentView {
         return error
       });
   
-      this._conciliationServiceObj.getAllProduct()
+      this._productServiceObj.getAllProduct()
       .then(({data}) => {
         
         this.praxList = data;
@@ -75,24 +89,22 @@ export class UnsquaredRangesComponentView {
         return error
       });
 
-      this.fetchUnsquaredRangesList();
-  
-    }
-  
-    ngOnInit() {
-  
-      this.unsquaredRangesForm = new FormGroup({
-        sucax: new FormControl(this.sucaxList, [Validators.required]),
-        prax: new FormControl(this.praxList, [Validators.required]),
-        dfearax: new FormControl(new Date(), [Validators.required])
-      });
-  
     }
 
 
     fetchUnsquaredRangesList(){
 
-      this._unsquaredRangesServiceObj.getAll()
+      let dateConciliation = this.unsquaredRangesForm.get('dfearax')!.value;
+
+      let yearConciliation = dateConciliation.getFullYear();
+      let monthConciliation = dateConciliation.getMonth();
+      let dayConciliation = dateConciliation.getDay();
+
+      let newMonthConciliation = monthConciliation.toString().length === 1? "0" + monthConciliation.toString():monthConciliation.toString();
+      let newDayConciliation = dayConciliation.toString().length === 1? "0" + dayConciliation.toString():dayConciliation.toString();
+      
+
+      this._unsquaredRangesServiceObj.getAll(yearConciliation.toString(), newMonthConciliation, newDayConciliation, this.unsquaredRangesForm.get('sucax')!.value, this.unsquaredRangesForm.get('prax')!.value)
       .then(({data}) => {
         
         this.dataSource = data;
@@ -111,7 +123,8 @@ export class UnsquaredRangesComponentView {
 
     onSubmit() {
       console.log(this.unsquaredRangesForm);  
+
+      this.fetchUnsquaredRangesList();
     }
-  
   
 }

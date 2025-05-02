@@ -7,7 +7,7 @@ import axios from 'axios';
  
 export class UnsquaredRangesService {
  
-  getAll (): Promise<any>{
-    return axios.get('/unsquaredRanges');
+  getAll (afearax_year: string, afearax_month: string, afearax_day: string, asidsucax: any, apidprax: any): Promise<any>{
+    return axios.get('/unsquaredRanges/'+afearax_year+'/'+afearax_month+'/'+afearax_day+'/'+asidsucax+'/'+apidprax);
   }  
 }
