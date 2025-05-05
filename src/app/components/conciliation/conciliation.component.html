@@ -25,7 +25,7 @@
             <div class="controls">
                 <select id="sucax" formControlName="sucax" class="form-control">
                     @for (item of sucaxList; track item.sidsucax) {
-                        <option [ngValue]="item.sidsucax">
+                        <option [ngValue]="item">
                         {{ item.scodsucax + "-" + item.snomsucax }}
                         </option>
                     }
@@ -39,7 +39,7 @@
             <div class="controls">
                 <select id="prax" formControlName="prax" class="form-control">
                     @for (item of praxList; track item.pidprax) {
-                        <option [ngValue]="item.pidprax">
+                        <option [ngValue]="item">
                         {{ item.pcodprax + "-" + item.pnomprax }}
                         </option>
                     }
@@ -53,7 +53,7 @@
             <div class="controls">
                 <select id="doax" formControlName="doax" class="form-control">
                     @for (item of doaxList; track item.diddoax) {
-                        <option [ngValue]="item.diddoax">
+                        <option [ngValue]="item">
                         {{ item.dcoddoax + "-" + item.dnomdoax }}
                         </option>
                     }

@@ -15,6 +15,9 @@ export class ConciliationService {
       "yearConciliationRequest": yearConciliationRequest
     }
 
+    console.log("Array that content data to Save in a conciliation");
+    console.log(bodyRequest)
+
     return axios.post('/Conciliation/createConciliation', bodyRequest);
   }
 

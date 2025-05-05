@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
 
     if (this.conciliationArrayInput.length>0) {
 
-      this._conciliationServiceObj.create(this.conciliationArrayInput, this.unsquaredRangesInput, this.formGroup.get('monthConciliation')!.value, this.formGroup.get('yearConciliation')!.value)
+      this._conciliationServiceObj.create(this.conciliationArrayInput, this.unsquaredRangesInput, this.formGroup.get('monthConciliation')!.value, this.formGroup.get('yearConciliation')!.value.value)
       .then(({data}) => {
         //this.isSaving = false
         Swal.fire({

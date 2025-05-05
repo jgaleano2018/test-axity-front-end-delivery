@@ -111,10 +111,14 @@ export class ConciliationComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("The registration submission was approved.");
     console.log(this.conciliationForm);
-    
-    this.conciliationEvent.emit(this.conciliationArray);
 
+    if (this.conciliationArray.length>0) {
+      alert("The registration submission was approved.");
+    
+      this.conciliationEvent.emit(this.conciliationArray);
+    }
   }
 
 
@@ -123,9 +127,9 @@ export class ConciliationComponent implements OnInit {
     const conciliationItem: ConciliationModel = new ConciliationModel(
       1,
       this.conciliationForm.get('afearax')!.value,
-      this.conciliationForm.get("sucax")!.value,
-      this.conciliationForm.get("prax")!.value,
-      this.conciliationForm.get("doax")!.value,
+      this.conciliationForm.get("sucax")!.value.id_Branch,
+      this.conciliationForm.get("prax")!.value.id_Product,
+      this.conciliationForm.get("doax")!.value.id_Document,
       this.conciliationForm.get("adifax")!.value,
       this.conciliationForm.get("asfarax")!.value,
       this.conciliationForm.get("aresax")!.value
@@ -136,6 +140,7 @@ export class ConciliationComponent implements OnInit {
     console.log("Adding conciliation....");
     console.log(this.conciliationArray);
 
+    alert("The record was added.")
   }
 
 }

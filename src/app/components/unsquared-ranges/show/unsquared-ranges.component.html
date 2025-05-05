@@ -1,10 +1,10 @@
 <div class="container">
-    <h2 class="text-center mt-5 mb-3">Countries Manager</h2>
+    <h2 class="text-center mt-5 mb-3">Informe Rangos Descuadrados</h2>
     <div class="card">
         <div class="card-header">
             <a routerLink="/listCountries/create"
                 class="btn btn-outline-primary float-right"
-                >Create New Log Countries
+                >Home
             </a>
         </div>
         <div class="card-body">
@@ -34,7 +34,7 @@
                     <div class="controls">
                         <select id="sucax" formControlName="sucax" class="form-control">
                             @for (item of sucaxList; track item.sidsucax) {
-                                <option [ngValue]="item.sidsucax">
+                                <option [ngValue]="item">
                                 {{ item.scodsucax + "-" + item.snomsucax }}
                                 </option>
                             }
@@ -48,7 +48,7 @@
                     <div class="controls">
                         <select id="prax" formControlName="prax" class="form-control">
                             @for (item of praxList; track item.pidprax) {
-                                <option [ngValue]="item.pidprax">
+                                <option [ngValue]="item">
                                 {{ item.pcodprax + "-" + item.pnomprax }}
                                 </option>
                             }
@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit" [disabled]="unsquaredRangesForm.invalid" style="width: 15%">
-                        Sign Up
+                        Submit
                     </button>
                 </div>
               

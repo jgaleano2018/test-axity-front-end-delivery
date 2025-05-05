@@ -1,7 +1,8 @@
 <div class="container">
     
-    <form [formGroup]="formGroup" (reset)="resetMyForm($event)" (submit)="formSubmit.next()">
-      
+    <!--<form [formGroup]="formGroup" (reset)="resetMyForm($event)" (submit)="formSubmit.next()" (ngSubmit)="onSubmit()">-->
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">  
         <div class="form-group">
             <!-- Year Filter -->
             <label for="yearConciliation">Año: <span class="lblError">*</span></label>
@@ -37,7 +38,7 @@
             </div>
         </div>
       <div class="form-group">
-        <button class="btn btn-primary" type="submit" type="submit" [disabled]="formGroup.invalid" style="width: 15%">
+        <button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid" style="width: 15%">
             Save Conciliation
         </button>
         <button class="btn btn-primary" type="reset" [disabled]="formGroup.invalid" style="width: 15%">

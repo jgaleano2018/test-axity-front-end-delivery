@@ -61,8 +61,6 @@ export class UnsquaredRangesComponent implements OnInit {
 
   ngOnInit() {
 
-    //this.unsquaredRangesForm = this.formGroupDir.form.get('unsquaredRanges') as FormGroup;
-
     this._branchServiceObj.getAllBranch()
     .then(({data}) => {
       
@@ -132,17 +130,19 @@ export class UnsquaredRangesComponent implements OnInit {
 
     const unsquaredRangesItem: UnsquaredRangesModel = new UnsquaredRangesModel(
           1,
-          this.unsquaredRangesForm.get('danoax')!.value,
+          this.unsquaredRangesForm.get('danoax')!.value.id,
           this.unsquaredRangesForm.get("dmesax")!.value,
-          this.unsquaredRangesForm.get("dconax")!.value,
-          this.unsquaredRangesForm.get("sucax")!.value,
-          this.unsquaredRangesForm.get("prax")!.value,
-          this.unsquaredRangesForm.get("doax")!.value,
+          this.unsquaredRangesForm.get("dconax")!.value.id,
+          this.unsquaredRangesForm.get("sucax")!.value.id_Branch,
+          this.unsquaredRangesForm.get("prax")!.value.id_Product,
+          this.unsquaredRangesForm.get("doax")!.value.id_Document,
           this.unsquaredRangesForm.get("dfearax")!.value,
           this.unsquaredRangesForm.get("ddifax")!.value,
           this.unsquaredRangesForm.get("dsfarax")!.value,
           this.unsquaredRangesForm.get("dresax")!.value,
         );
+
+    alert("The registration submission was approved.");
 
     this.unsquaredRangesEvent.emit(unsquaredRangesItem);
   }

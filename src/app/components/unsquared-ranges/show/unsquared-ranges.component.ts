@@ -31,8 +31,6 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UnsquaredRangesComponentView {
-
-  formGroupDir = inject(FormGroupDirective);
   unsquaredRangesForm!: FormGroup<any>;
   sucaxList: BranchModel[] = [];
   praxList: ProductModel[] = [];
